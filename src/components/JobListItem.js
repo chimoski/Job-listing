@@ -1,34 +1,7 @@
 
-// import img from '../images/photosnap.svg'
-
 export const JobListItem = ({item,handleStackClick}) => {
-
- 
-  const { 
-    company,
-    logo,
-    featured,
-    position,
-    role,
-    level,
-    postedAt,
-    contract,
-    location,
-    languages,
-    tools} = item;
-
-    // const stacks = [...languages && languages, ...tools && tools,role,level]
-
-
-    const stacks= [role,level];
-
-    if(languages) {
-      stacks.push(...languages);
-    }
-    if(tools) {
-      stacks.push(...tools)
-    }
-    
+  const { company,logo,featured,position,role,level,postedAt,isNew,contract,location,languages,tools} = item;
+    const stacks = [...languages, ...tools,role,level]; 
   return (
     <main>
     <div className="w-[80%] bg-[#fff]  lg:items-center
@@ -43,7 +16,7 @@ export const JobListItem = ({item,handleStackClick}) => {
       <div className='flex flex-col gap-3'>
        <div className='flex gap-x-2 items-center'>
        <p className='pr-5 text-[#5ba4a4] font-bold'>{company}</p>
-        {item.new && 
+        {isNew &&
          <p className='text-white bg-[#5ba4a4] text-[12px] rounded-full sm:text-sm font-bold px-2 py-1'>
          NEW!
        </p>

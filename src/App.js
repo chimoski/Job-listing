@@ -2,57 +2,36 @@ import { JobListItem } from './components/JobListItem';
 import React,{useState,useEffect } from 'react'
 import desktopImage from './images/bg-header-desktop.svg'
 import mobileImage from './images/bg-header-mobile.svg'
-import data from './data.json'
+
 function App() {
   const [filters,  setFilters] = useState([]);
-  const [displayFilterBtns, setDisplayFilterBtns] = useState(true);
   const [items, setItems] = useState([]);
   useEffect(()=>{
-    setItems(data)
+    fetch('/data.json')
+    .then(resp=>resp.json())
+    .then(data=> setItems(data));
   },[]);
-
   const filterByStack = ({role,level,languages,tools })=>{
     if(filters.length ===0){
       return true
     }
-    const stacks= [role,level];
-    if(languages) {
-      stacks.push(...languages);
-    }
-    if(tools) {
-      stacks.push(...tools);
-    }
-    return stacks.some(item=>filters.includes(item))
-  
+    const stacks= [role,level, ...languages, ...tools];
+    return stacks.find(item=>filters.includes(item))
   }
-
   const handleStackClick =(item)=>{
     if(filters.includes(item)) return
-    setDisplayFilterBtns(true);
     setFilters([...filters, item]);
   }
-
+  // fiteration starts here
   const filteredItems = items.filter(filterByStack);
-  console.log(items);
-
   const handleFilterClick =(filter)=>{
-    setFilters(filters.filter((f)=> f !==filter))
+    const filtered = filters.filter(f=> f !== filter);
+    setFilters(filtered);
   }
- 
-  // const [filterBtns, setFilterBtns] = useState([])
-  // const {languages} = items
-
-
   const handleClear = (e)=>{
     e.preventDefault();
-    setDisplayFilterBtns(false);
     setFilters([]);
   }
-  // const handleFilterOnClick = (e)=>{
-  //   e.preventDefault()
-  //   // setFilterBtns([...languages]);
-  //   setDisplayFilterBtns(true);
-  // }
   return (
     <div>
       <header className="">
@@ -68,12 +47,9 @@ function App() {
        className='md:hidden h-[30vw]'
         src={mobileImage} alt="" />
       </header>
-
-        
-
-     <div className={`bg-[#effafa] ${displayFilterBtns  && filters.length>0 ? '':'pt-12'}`}>
+     <div className={`bg-[#effafa] h-[100v%] ${filters.length>0 ? '':'pt-12'}`}>
       {
-        displayFilterBtns && filters.length>0 && (
+        filters.length>0 && (
           <div  className=' flex-wrap  
         w-[80%] bg-[#fff] shadow-lg flex justify-between 
          lg:items-center mx-auto p-4 translate-y-[-30px] rounded'>
@@ -100,8 +76,6 @@ function App() {
       </div>
         )
       }
-    
-
       {
        filteredItems.map(item=>(
          <JobListItem  
@@ -115,5 +89,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
