@@ -60,6 +60,9 @@ function App() {
       } else return false
   }
   const searchItems = items.filter(searchFilter);
+  const prevent = (e)=>{
+    e.preventDefault();
+  }
   return (
     
     <div>
@@ -76,7 +79,7 @@ function App() {
        className='md:hidden h-[30vw]'
         src={mobileImage} alt="" />
        
-       <form>
+       <form onSubmit={prevent}>
          <div 
        className='absolute top-[50%] left-[50%] translate-x-[-50%] 
        translate-y-[-50%] bg-[#000] w-[70%] lg:w-[40%] py-2 px-4 rounded-full flex items-center
