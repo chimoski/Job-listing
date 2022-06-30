@@ -29,7 +29,9 @@ export const JobListItem = ({item,handleStackClick}) => {
         }
         
        </div>
-       <p className='font-bold hover:text-[#5ba4a4] cursor-pointer'>{position}</p>
+       <p
+       onClick={()=>handleStackClick(position)}
+        className='font-bold hover:text-[#5ba4a4] cursor-pointer'>{position}</p>
        <div className='flex gap-8 text-gray-500 font-semibold'>
         <p className='text-[12px] sm:text-base'>{postedAt}</p>
         <ul className='flex gap-8 list-disc text-[12px] sm:text-base'>

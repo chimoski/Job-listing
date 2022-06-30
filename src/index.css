@@ -11,3 +11,7 @@
       px-2 py-1  rounded-md cursor-pointer hover:bg-[#5ba4a4] hover:text-white   ;
   }
 }
+
+body{
+  background-color: #effafa;
+}
